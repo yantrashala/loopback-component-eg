@@ -1,0 +1,39 @@
+{
+  "name": "loopback-component-eg",
+  "version": "1.0.0",
+  "description": "A loopback component that allows express-gateway to use loopback user model for authentication",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run mocha:istanbul",
+    "test:all": "cross-env EG_DISABLE_CONFIG_WATCH=true mocha --recursive \"./test/*.test.js\" --timeout 60000",
+    "mocha:istanbul": "nyc --reporter=lcov npm run test:all && nyc report --report=lcov > coverage.lcov",
+    "posttest2": "npm run lint && nsp check",
+    "lint": "eslint ."
+  },
+  "keywords": [
+    "express-gateway"
+  ],
+  "author": "pbhadauria2000",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "cross-env": "^5.1.1",
+    "istanbul": "^0.4.5",
+    "mocha": "^4.0.1",
+    "mocha-lcov-reporter": "^1.3.0",
+    "nyc": "^11.3.0",
+    "supertest": "^3.0.0",
+    "supertest-session": "^3.1.0",
+    "compression": "^1.0.3",
+    "cors": "^2.5.2",
+    "helmet": "^1.3.0",
+    "loopback-boot": "^2.6.5",
+    "serve-favicon": "^2.0.1",
+    "strong-error-handler": "^2.0.0",
+    "loopback-component-explorer": "^5.0.0",
+    "loopback": "^3.0.0",
+    "eslint": "^3.17.1",
+    "eslint-config-loopback": "^8.0.0",
+    "nsp": "^2.1.0"
+  }
+}
