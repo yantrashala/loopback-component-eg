@@ -41,8 +41,11 @@ module.exports = function(app, config) {
   accessTokenSubClass.resolve = function(id, cb) {
     if (id) {
       try {
+        id = (new Buffer(id, 'base64')).toString('utf8');
+        id = id.substring(5);
+        let user = JSON.parse(id);
         let token = new accessTokenSubClass();
-        token.userId = id;
+        token.userId = user.id;
         cb(null, token);
       } catch (err) {
         // Should override the error to 401
