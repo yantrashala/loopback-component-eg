@@ -35,5 +35,8 @@
     "eslint": "^3.17.1",
     "eslint-config-loopback": "^8.0.0",
     "nsp": "^2.1.0"
+  },
+  "dependencies": {
+    "lodash": "^4.17.4"
   }
 }
