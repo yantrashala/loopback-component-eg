@@ -15,6 +15,7 @@ function createPromiseCallback() {
 }
 
 module.exports = function (app, config) {
+  const userIdField = config['userIdField'] || 'id';
   const userSubClass = app.loopback.getModelByType('User');
   const accessTokenSubClass = app.loopback.getModelByType('AccessToken');
   const roleSubClass = app.loopback.getModelByType('Role');
@@ -30,7 +31,7 @@ module.exports = function (app, config) {
   userSubClass.baseLogin = userSubClass.login;
   userSubClass.login = function (credentials, include, fn) {
 
-    if(include.indexOf('user')<0) include = 'user,' +include;
+    if (include && include.indexOf('user') < 0) include = 'user,' + include;
 
     const getRolesById = function (id, cb) {
       userSubClass.getApp(function (err, app) {
@@ -83,7 +84,7 @@ module.exports = function (app, config) {
     }
 
     let token = new accessTokenSubClass();
-    token.userId = this.id;
+    token.userId = this[userIdField];
 
     if (cb) {
       return cb(null, token);
@@ -100,7 +101,7 @@ module.exports = function (app, config) {
         let user = JSON.parse(id);
         let token = new accessTokenSubClass();
         token.orgUser = user;
-        token.userId = user.id;
+        token.userId = user[userIdField];
         cb(null, token);
       } catch (err) {
         // Should override the error to 401
@@ -114,12 +115,12 @@ module.exports = function (app, config) {
   if (config.roles) {
     config.roles.forEach((role) => {
       roleSubClass.registerResolver(role, function (role, context, cb) {
-        if(context.accessToken && context.accessToken.orgUser 
+        if (context.accessToken && context.accessToken.orgUser
           && context.accessToken.orgUser.roles) {
-            cb(null, context.accessToken.orgUser.roles.includes(role));
-          } else {
-            cb(null, false);
-          }        
+          cb(null, context.accessToken.orgUser.roles.includes(role));
+        } else {
+          cb(null, false);
+        }
       });
     });
   }

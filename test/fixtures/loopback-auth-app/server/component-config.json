@@ -4,6 +4,6 @@
     "generateOperationScopedModels": true
   },
   "../../../../index": {
-    
+    "userIdField": "id"
   }
 }

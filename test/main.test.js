@@ -27,11 +27,4 @@ describe('E2E: Tests', () => {
       });
   });
 
-  it('should return username when accessed with access_token', function () {
-    return request(app)
-      .get('/api/Customers/1?access_token=1')
-      .then(function(res) {
-        expect(res.body).to.have.property('username');
-      });
-  });
 })
